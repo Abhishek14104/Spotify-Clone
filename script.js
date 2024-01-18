@@ -33,7 +33,6 @@ async function getSongs(folder) {
  
 
 
-    // Show all the songs in the playlist
     let songUL = document.querySelector(".songList").getElementsByTagName("ul")[0]
     songUL.innerHTML = ""
     for (const song of songs) {
@@ -46,7 +45,6 @@ async function getSongs(folder) {
                             </div> </li>`;
     }
 
-    // Attach an event listener to each song
     Array.from(document.querySelector(".songList").getElementsByTagName("li")).forEach(e => {
         e.addEventListener("click", element => {
             playMusic(e.querySelector(".info").firstElementChild.innerHTML.trim() + ".mp3")
@@ -118,20 +116,18 @@ async function displayAlbums() {
         }
     }
 
-    // Load the playlist whenever card is clicked
     Array.from(document.getElementsByClassName("card")).forEach(e => { 
         e.addEventListener("click", async item => {
             songs = await getSongs(`songs/${item.currentTarget.dataset.folder}`) 
+            document.querySelector(".hamburger").click();
         })
     })
 }
 
 async function main() {
-    // Display all the albums on the page
     await displayAlbums()
 
 
-    // Attach an event listener to play, next and previous
     play.addEventListener("click", () => {
         if (currentSong.paused) {
             currentSong.play()
